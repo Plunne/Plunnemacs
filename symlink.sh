@@ -36,6 +36,11 @@ unlink_files() {
 	done
 }
 
+updateOrg() {
+	rm README.org
+	cp config.org README.org
+}
+
 case $1 in
 	-l)
 		link $2
@@ -52,5 +57,8 @@ case $1 in
     -r)
 		link_files
         unlink_files
+		;;
+	-o)
+		updateOrg
 		;;
 esac

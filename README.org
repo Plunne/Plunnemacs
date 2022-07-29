@@ -276,11 +276,19 @@ There are the keybindings.
     ;; Quit
     "q q"       '(kill-current-buffer :which-key "Kill buffer")
     "q Q"       '(evil-quit :which-key "Quit Emacs")
+    ;; Visual
+    "v b"       '(show-branches :which-key "Branches")
+    "v v"       '(show-subtree :which-key "Display")
+    "v c"       '(hide-subtree :which-key "Collapse")
+    "v o"       '(hide-other :which-key "Hide other")
+    "v a"       '(hide-sublevels :which-key "Hide all")
+    "v A"       '(show-all :which-key "Show all")
     ;; Save
     "w w"       '(save-buffer :which-key "Save file")
-    "w q"       '((lambda () (interactive) (save-buffer) (kill-current-buffer)) :which-key "Save and close")
+    "w q"       '((lambda () (interactive) (save-buffer) (kill-current-buffer) (evil-window-delete)) :which-key "Save and close")
+    "w e"       '((lambda () (interactive) (save-buffer) (kill-current-buffer)) :which-key "Save and kill")
     "w a w"     '(evil-write-all :which-key "Save all file")
-    "w a q"     '((lambda () (interactive) (evil-write-all) (centaur-tabs-kill-all-buffers-in-current-group)) :which-key "Save All and close")
+    "w a q"     '((lambda () (interactive) (evil-write-all) (centaur-tabs-kill-all-buffers-in-current-group) (evil-window-delete)) :which-key "Save All and close")
     "w Q"       '(evil-save-modified-and-close :which-key "Save and close Emacs")
     ;; Window splits
     "w c"       '(evil-window-delete :which-key "Close window")
@@ -492,6 +500,7 @@ Some miscellaneous patches.
 
 (setq use-short-answers t ; Replace yes/no prompts with y/n
       frame-resize-pixelwise t ; Patching the bottom empty space glitch
+      make-backup-files nil ; Disable the anoying backup~
       initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")) ; Dashboard at startup
       scroll-conservatively 10000) ; Smooth scrolling
 #+end_src
@@ -503,13 +512,13 @@ Some miscellaneous patches.
 A theme library from Doom Emacs.
 
 My themes come with my Emacs config but you can also find them on my repo.
-Github : https://github.com/Plunne/doom-plunne-themes
+Github : https://github.com/Plunne/doom-feather-theme
 
 _Notice :_
 
 To get my theme works, you have to copy them from =./themes= to =./elpa/doom-themes= .
 
-If you prefer the light theme, change =doom-plunne-dark= to =doom-plunne-light= .
+If you prefer the light theme, change =doom-feather-dark= to =doom-feather-light= .
 With *solaire-mode* change the dashboard banner logo to =plunnemacs-light.png= . 
 
 #+begin_src emacs-lisp
@@ -520,7 +529,7 @@ With *solaire-mode* change the dashboard banner logo to =plunnemacs-light.png= .
               doom-themes-enable-italic t
               doom-themes-treemacs-theme "doom-atom")
         (doom-themes-treemacs-config)
-        (load-theme 'doom-plunne-dark t))
+        (load-theme 'doom-feather-dark t))
 #+end_src
 
 *IMORTANT!*
@@ -600,8 +609,11 @@ Modeline is the status bar of Emacs, *doom-modeline* is an enhancement.
 (use-package doom-modeline
     :after doom-themes
     :config
-        (setq doom-modeline-indent-info t)  ; Show indent mode
-        (doom-modeline-mode 1))             ; Use Modeline
+        (setq doom-modeline-indent-info t                           ; Show indent mode
+              column-number-indicator-zero-based nil                ; Column count starts from 1
+              doom-modeline-buffer-file-name-style 'truncate-nil)   ; Filename path (full path there)
+        (column-number-mode t)                                      ; Display column number
+        (doom-modeline-mode 1))                                     ; Use Modeline
 
 (use-package hide-mode-line) ; Allows to hide the modeline of some modes
 #+end_src
@@ -645,7 +657,7 @@ Launch a beautiful *dashboard* at startup. Also pretty customizable.
               dashboard-footer-icon (all-the-icons-octicon "dashboard"
                                                            :height 1.1
                                                            :v-adjust -0.05
-                                                           :face 'font-lock-keyword-face)
+                                                           :face 'dashboard-navigator)
               dashboard-footer-messages '("Plunnemacs powered by @PlunneCeleste.")
               dashboard-modify-heading-icons '((recents . "file-text")))
         (dashboard-setup-startup-hook))
@@ -707,7 +719,7 @@ General settings for *Org Mode*.
         (org-mode . visual-fill-column-mode)
         (org-mode . variable-pitch-mode)
     :config
-        (setq org-ellipsis ""
+        (setq org-ellipsis " "
               org-hide-emphasis-markers t
               org-blank-before-new-entry (quote ((heading . nil)
                                                  (plain-list-item . nil)))))
@@ -825,34 +837,18 @@ Change the Org Bullets whatever you want.
 
 Customize *Org fonts*, also lists improvements.
 
-*** Headers
+*** Faces
 
-Appearence of header lines and various org contents.
+Appearence of org contents.
 
 #+begin_src emacs-lisp
-(dolist
-    ;; Org headers font sizes
-    (face '((org-level-1 . 1.8)
-            (org-level-2 . 1.2)
-            (org-level-3 . 1.1)
-            (org-level-4 . 1.0)
-            (org-level-5 . 1.0)
-            (org-level-6 . 1.0)
-            (org-level-7 . 1.0)
-            (org-level-8 . 1.0)))
-
-    ;; Headers font
-    (set-face-attribute (car face) nil :font "DejaVuSans" :weight 'bold :height (cdr face))
-
-    ;; Fixed pitch
-    (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-    (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
-    (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
-    (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-    (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-    (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-    (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
-)
+(set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 #+end_src
 
 *** List hyphen
@@ -1089,6 +1085,28 @@ For programming we need these important tools that will change our workflow.
 (evil-multiedit-default-keybinds)
 #+end_src
 
+*** Rainbow Parentheses
+
+#+begin_src emacs-lisp
+(use-package rainbow-delimiters
+    :hook
+        ;; Bash
+        (sh-mode . rainbow-delimiters-mode)
+        ;; C/C++
+        (c-mode . rainbow-delimiters-mode)
+        (c++-mode . rainbow-delimiters-mode)
+        (objc-mode . rainbow-delimiters-mode)
+        (cuda-mode . rainbow-delimiters-mode)
+        ;; Elisp
+        (emacs-lisp-mode . rainbow-delimiters-mode)
+        ;; HTML/CSS
+        (css-mode . rainbow-delimiters-mode)
+        ;; Lua
+        (lua-mode . rainbow-delimiters-mode)
+        ;; Python
+        (python-mode . rainbow-delimiters-mode))
+#+end_src
+
 ** LSP
 
 Language Server Protocol.
@@ -1174,8 +1192,9 @@ Improve the syntax highlighting so much!
         (c++-mode . tree-sitter-hl-mode)
         (objc-mode . tree-sitter-hl-mode)
         (cuda-mode . tree-sitter-hl-mode)
-        ;; Lua
-        (lua-mode . tree-sitter-hl-mode)
+        ;; HTML/CSS
+        (html-mode . tree-sitter-hl-mode)
+        (css-mode . tree-sitter-hl-mode)
         ;; Python
         (python-mode . tree-sitter-hl-mode)
 )
@@ -1216,7 +1235,13 @@ _To enable it :_
 - Enable impatient-mode in every buffers of the site you are editing : *M-x* =impatient-mode=
 
 Then, browse the local link : =http://localhost:8080/imp=
-  
+
+*** JSON
+
+#+begin_src emacs-lisp
+(use-package json-mode)
+#+end_src
+
 *** Lua
 
 Enable *Lua* language server and setup indent width to 4.
@@ -1233,6 +1258,12 @@ Enable *Python* LSP.
 (use-package lsp-pyright :hook (python-mode . (lambda () (require 'lsp-pyright) (lsp))))
 #+end_src
 
+*** YAML
+
+#+begin_src emacs-lisp
+(use-package yaml-mode)
+#+end_src
+
 ** YASnippet
 
 Make every snippets you want with *YASnippet* !
@@ -1242,8 +1273,6 @@ Make every snippets you want with *YASnippet* !
     :config
         (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
         (yas-global-mode 1))
-
-(use-package yasnippet-snippets :after yasnippet)
 
 (evil-global-set-key 'insert (kbd "C-,") 'yas-expand)
 (evil-global-set-key 'insert (kbd "C-]") 'yas-next-field)
