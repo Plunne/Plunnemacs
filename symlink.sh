@@ -20,6 +20,7 @@ snippets \
 themes \
 config.org \
 init.el \
+README.org \
 )
 
 lenFiles=${#tabFiles[@]}
@@ -34,11 +35,6 @@ unlink_files() {
 	for ((i=0; i<$lenFiles; i++)); do
 		unlink ${tabFiles[i]};
 	done
-}
-
-updateOrg() {
-	rm README.org
-	cp config.org README.org
 }
 
 case $1 in
@@ -57,8 +53,5 @@ case $1 in
     -r)
 		link_files
         unlink_files
-		;;
-	-o)
-		updateOrg
 		;;
 esac
