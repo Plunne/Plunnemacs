@@ -3,6 +3,8 @@
 
 This is my EMACS configuration.
 
+[[https://github.com/Plunne/Plunnemacs/blob/screenshots/README.org][See screenshots here]]
+
 * TABLE OF CONTENTS :toc:
 - [[#important-before-running-emacs][IMPORTANT! BEFORE RUNNING EMACS]]
 - [[#package-management][PACKAGE MANAGEMENT]]
