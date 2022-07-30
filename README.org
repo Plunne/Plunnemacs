@@ -1,7 +1,7 @@
-#+TITLE: Plunne's Emacs
+#+TITLE: PLUNNEMACS
 #+AUTHOR: Lena SAVY
 
-This is my EMACS configuration.
+This is my EMACS distribution.
 
 [[https://github.com/Plunne/Plunnemacs/blob/screenshots/README.org][See screenshots here]]
 
