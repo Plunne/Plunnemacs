@@ -17,10 +17,10 @@ Screenshots of my EMACS distribution.
 * DASHBOARD & MINIBUFFER
 
 ** Dark
-[[https://github.com/Plunne/Plunnemacs/blob/screenshots/dashboard_minibuffer_dark.png]]
+[[https://raw.githubusercontent.com/Plunne/Plunnemacs/screenshots/dashboard_minibuffer_dark.png]]
 
 ** Light
-[[https://github.com/Plunne/Plunnemacs/blob/screenshots/dashboard_minibuffer_light.png]]
+[[https://raw.githubusercontent.com/Plunne/Plunnemacs/screenshots/dashboard_minibuffer_light.png]]
 
 * ORG-MODE & TREEMACS
 
