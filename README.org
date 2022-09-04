@@ -1,9 +1,7 @@
-#+TITLE: PLUNNEMACS
+#+TITLE: Plunne's Emacs
 #+AUTHOR: Lena SAVY
 
-This is my EMACS distribution.
-
-[[https://github.com/Plunne/Plunnemacs/blob/screenshots/README.org][See screenshots here]]
+This is my EMACS configuration.
 
 * TABLE OF CONTENTS :toc:
 - [[#important-before-running-emacs][IMPORTANT! BEFORE RUNNING EMACS]]

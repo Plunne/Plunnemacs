@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: unsigned short
+# key: ushort
+# --
+unsigned short $0

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: source
+# key: C
+# --
+#include "$2.h"
+
+$0

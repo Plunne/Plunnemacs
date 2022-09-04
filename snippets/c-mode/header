@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: header
+# key: H
+# --
+#ifndef __$1_H
+#define __$1_H
+
+#include $0
+
+#endif // __$1_H

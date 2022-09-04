@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: unsigned char
+# key: uchar
+# --
+unsigned char $0

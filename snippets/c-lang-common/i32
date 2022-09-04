@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: int32_t
+# key: int32_t
+# --
+int32_t $0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: uint16_t
+# key: uint16_t
+# --
+uint16_t $0

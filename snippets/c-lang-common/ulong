@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: unsigned long
+# key: ulong
+# --
+unsigned long $0

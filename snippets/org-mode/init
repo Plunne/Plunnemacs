@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: init
+# key: init
+# --
+#+TITLE: $1
+#+AUTHOR: $2
+
+$0
+
+* TABLE OF CONTENT :toc:

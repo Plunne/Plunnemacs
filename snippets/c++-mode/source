@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: source
+# key: CPP
+# --
+#include "$2.h"
+
+void $2::$2() {
+	$0	
+}

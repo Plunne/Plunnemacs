@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: unsigned double
+# key: udouble
+# --
+unsigned double $0

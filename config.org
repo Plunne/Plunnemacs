@@ -202,6 +202,7 @@ There are the keybindings.
 
 (nvmap :keymaps 'override :prefix "SPC"
     "SPC"       '(counsel-M-x :which-key "M-x")
+    "RET"       '(project-compile :which-key "RET")
     "<tab>"     '(org-open-at-point :which-key "M-x")
     "h r r"     '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "Reload emacs config")
     "e"         '(treemacs :which-key "Explorer")
@@ -496,11 +497,12 @@ Some miscellaneous patches.
 
 #+begin_src emacs-lisp
 (global-auto-revert-mode t) ; Refresh buffer instantly after a save.
-(set-fringe-mode 10)        ; Set a little space for side indicators.
+(set-fringe-mode 10) ; Set a little space for side indicators.
 
-(setq use-short-answers t ; Replace yes/no prompts with y/n
+(setq-default use-short-answers t ; Replace yes/no prompts with y/n
       frame-resize-pixelwise t ; Patching the bottom empty space glitch
       make-backup-files nil ; Disable the anoying backup~
+      truncate-lines t ; Disable lines wrapping
       initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")) ; Dashboard at startup
       scroll-conservatively 10000) ; Smooth scrolling
 #+end_src
@@ -519,7 +521,7 @@ _Notice :_
 To get my theme works, you have to copy them from =./themes= to =./elpa/doom-themes= .
 
 If you prefer the light theme, change =doom-feather-dark= to =doom-feather-light= .
-With *solaire-mode* change the dashboard banner logo to =plunnemacs-light.png= . 
+With *solaire-mode* change the dashboard banner logo to =plunnemacs-dark.png= . 
 
 #+begin_src emacs-lisp
 (use-package doom-themes
@@ -529,7 +531,7 @@ With *solaire-mode* change the dashboard banner logo to =plunnemacs-light.png= .
               doom-themes-enable-italic t
               doom-themes-treemacs-theme "doom-atom")
         (doom-themes-treemacs-config)
-        (load-theme 'doom-feather-dark t))
+        (load-theme 'doom-feather-light t))
 #+end_src
 
 *IMORTANT!*
@@ -629,13 +631,13 @@ Launch a beautiful *dashboard* at startup. Also pretty customizable.
               dashboard-set-file-icons t
               dashboard-center-content nil ; set to 't' for centered content
               ;; Banner
-              dashboard-startup-banner (expand-file-name "themes/logo/plunnemacs-dark.png" user-emacs-directory) ; use custom image as banner
+              dashboard-startup-banner (expand-file-name "themes/logo/plunnemacs-light.png" user-emacs-directory) ; use custom image as banner
               dashboard-banner-logo-title "Org because Unicorn!"
               ;; Navigator
               dashboard-set-navigator t
               dashboard-navigator-buttons ; Format: "(icon title help action face prefix suffix)"
                 `(( ;; Button 1 
-                    (" " "Gitlab" "Gitlab profile"
+                    (" " "Github" "Github profile"
                     (lambda (&rest _) (browse-url-firefox "github.com/Plunne")))
                     ;; Button2
                     (" " "TODOs" "TODO List"
@@ -850,6 +852,8 @@ Appearence of org contents.
 (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 #+end_src
+
+#+RESULTS:
 
 *** List hyphen
 

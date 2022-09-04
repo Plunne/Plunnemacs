@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: typedef union
+# key: tunion
+# --
+typedef union {
+        $0
+} ${1:name};

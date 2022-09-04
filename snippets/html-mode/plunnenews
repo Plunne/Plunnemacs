@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: PlunneNews
+# key: plunnenews
+# --
+<article>
+	<header>
+		<h1><a href="/categories/blog/articles/${1:n_article}">${2:ARTICLE}</a></h1>
+		<p class="datetime"><i class="far fa-calendar-alt"></i>  ${3:DD/MM/YYYY}  <i class="far fa-clock"></i>  ${4:HH:MM}  </p>
+	</header>
+	<p>
+		$0.
+	</p>
+	<br/>
+	<footer>
+		<a href="/categories/blog/articles/$1">Lire plus...</a>
+	</footer>
+</article>

@@ -1,0 +1,42 @@
+# -*- mode: snippet -*-
+# name: PlunneArticle
+# key: plunnearticle
+# --
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/css/styles.css">
+        <link rel="shortcut icon" href="https://github.com/Plunne/plunne.github.io/blob/main/favicon.ico">
+		<title>Plunne's Cloud</title>
+	</head>
+	<body>
+        <nav>
+            <!-- Home -->
+            <div class="nav-home">
+                <img class="logo-home" src="/images/Logo_Plunne_Color.png">
+        	    <a class="home" href="/index">Plunne's Cloud</a>
+            </div>
+
+            <!-- Spacer -->
+            <div class="nav-spacer"></div>
+
+    		<!-- Menu -->
+    		<ul class="nav-menu">
+                <li><a href="/index">Home</a></li>
+        		<li><a class="selected" href="/categories/blog/blog">Blog</a></li>
+	        	<li><a href="/categories/about/aboutme">About</a></li>
+        		<li><a href="/categories/cv/cv">CV</a></li>
+        		<li><a href="/categories/contact/contactme">Contact</a></li>
+    		</ul>
+		</nav>
+		<div class="container">
+            <h1>${1:ARTICLE}</h1>
+            <p>
+				$0<br/>
+				<br/>
+				<br/>
+			</p>
+		</div>
+	</body>
+</html>

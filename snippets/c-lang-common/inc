@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: #include <...>
-# key  : incs
+# name: #include "..."
+# key: inc
 # --
-#include <$1>
+#include "${1:file}.h"$0

@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: header
+# key: HPP
+# --
+#ifndef __$1_H
+#define __$1_H
+
+#include $0
+
+class $2 $3
+{
+public:
+	$2();
+};
+
+#endif // __$1_H

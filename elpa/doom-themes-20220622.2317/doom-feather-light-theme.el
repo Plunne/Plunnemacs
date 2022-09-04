@@ -1,6 +1,6 @@
 ;;; doom-feather-light-theme.el --- Based on Doom One Light -*- lexical-binding: t; no-byte-compile: t; -*-
 ;;
-;; Date: July 24, 2022
+;; Date: July 30, 2022
 ;; Author: Lena SAVY-LARIGALDIE <https://github.com/Plunne> mainly on Gitlab
 ;; Original: Henrik Lissner <https://github.com/hlissner>
 ;; Source: https://github.com/Plunne/doom-feather-themes
@@ -40,41 +40,41 @@ Can be an integer to determine the exact padding."
   "A light theme based on Doom One Light."
 
   ;; name        default   256       16
-  ((bg         '("#F0EDF4" "white"   "white"        ))
+  ((bg         '("#F0EDF4" "#ffffff" "white"        ))
    (fg         '("#4A3B5E" "#424242" "black"        ))
 
    ;; These are off-color variants of bg/fg, used primarily for `solaire-mode',
    ;; but can also be useful as a basis for subtle highlights (e.g. for hl-line
    ;; or region), especially when paired with the `doom-darken', `doom-lighten',
    ;; and `doom-blend' helper functions.
-   (bg-alt     '("#E8E4EE" "white"   "white"        ))
-   (fg-alt     '("#9783B1" "#c7c7c7" "brightblack"  ))
+   (bg-alt     '("#E8E4EE" "#e4e4e4" "white"        ))
+   (fg-alt     '("#9783B1" "#949494" "brightblack"  ))
 
    ;; These should represent a spectrum from bg to fg, where base0 is a starker
    ;; bg and base8 is a starker fg. For example, if bg is light grey and fg is
    ;; dark grey, base0 should be white and base8 should be black.
-   (base0      '("#E8E4EE" "#f0f0f0" "white"        ))
-   (base1      '("#E1DBE9" "#e7e7e7" "brightblack"  ))
-   (base2      '("#D9D2E3" "#dfdfdf" "brightblack"  ))
-   (base3      '("#C3B7D2" "#c6c7c7" "brightblack"  ))
-   (base4      '("#B4A5C7" "#9ca0a4" "brightblack"  ))
-   (base5      '("#9783B1" "#424242" "brightblack"  ))
-   (base6      '("#4A3B5E" "#2e2e2e" "brightblack"  ))
-   (base7      '("#2A2236" "#1e1e1e" "brightblack"  ))
-   (base8      '("#15111B" "black"   "black"        ))
+   (base0      '("#E8E4EE" "#eeeeee" "white"        ))
+   (base1      '("#E1DBE9" "#e4e4e4" "brightblack"  ))
+   (base2      '("#D9D2E3" "#dadada" "brightblack"  ))
+   (base3      '("#C3B7D2" "#c6c6c6" "brightblack"  ))
+   (base4      '("#B4A5C7" "#b2b2b2" "brightblack"  ))
+   (base5      '("#9783B1" "#949494" "brightblack"  ))
+   (base6      '("#4A3B5E" "#424242" "brightblack"  ))
+   (base7      '("#2A2236" "#262626" "brightblack"  ))
+   (base8      '("#15111B" "#121212" "black"        ))
 
    (grey       base4)
    (red        '("#dc322f" "#dc322f" "red"          ))
-   (orange     '("#d75f00" "#cb4b16" "brightred"    ))
-   (green      '("#5f8700" "#859900" "green"        ))
-   (teal       '("#008070" "#35a69c" "brightgreen"  ))
-   (yellow     '("#a07000" "#b58900" "yellow"       ))
-   (blue       '("#007DAF" "#268bd2" "brightblue"   ))
-   (dark-blue  '("#2257A0" "#3F88AD" "blue"         ))
-   (magenta    '("#F4649B" "#d33682" "magenta"      ))
-   (violet     '("#875faf" "#6c71c4" "brightmagenta"))
-   (cyan       '("#008EA1" "#2aa198" "brightcyan"   ))
-   (dark-cyan  '("#204052" "#204052" "cyan"         ))
+   (orange     '("#d75f00" "#d75f00" "brightred"    ))
+   (green      '("#5f8700" "#578700" "green"        ))
+   (teal       '("#008070" "#008787" "brightgreen"  ))
+   (yellow     '("#a07000" "#875f00" "yellow"       ))
+   (blue       '("#007daf" "#0087d7" "brightblue"   ))
+   (dark-blue  '("#2257A0" "#005faf" "blue"         ))
+   (magenta    '("#f4649b" "#ff5f87" "magenta"      ))
+   (violet     '("#875faf" "#875faf" "brightmagenta"))
+   (cyan       '("#008ea1" "#0087af" "brightcyan"   ))
+   (dark-cyan  '("#204052" "#005f5f" "cyan"         ))
 
    ;; These are the "universal syntax classes" that doom-themes establishes.
    ;; These *must* be included in every doom themes, or your theme will throw an
@@ -178,6 +178,8 @@ Can be an integer to determine the exact padding."
    (outline-7 :height 1.0 :foreground (doom-darken teal 0.5) :weight 'bold)
    (outline-8 :height 1.0 :foreground (doom-darken violet 0.8) :weight 'bold)
    ;;;; org <built-in>
+   (org-document-title :height 2.0 :foreground teal :weight 'bold)
+   (org-document-info :foreground teal)
    ((org-block &override) :background base1)
    ((org-block-begin-line &override) :foreground comments)
    (org-ellipsis :underline nil :background bg     :foreground red)

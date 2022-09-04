@@ -1,6 +1,6 @@
 ;;; doom-feather-dark-theme.el --- Based on Doom One Dark -*- lexical-binding: t; no-byte-compile: t; -*-
 ;;
-;; Date: July 24, 2022
+;; Date: July 30, 2022
 ;; Author: Lena SAVY-LARIGALDIE <https://github.com/Plunne> mainly on Gitlab
 ;; Original: Henrik Lissner <https://github.com/hlissner>
 ;; Source: https://github.com/Plunne/doom-feather-themes
@@ -164,6 +164,9 @@ Can be an integer to determine the exact padding."
    (outline-6 :height 1.0 :foreground (doom-lighten blue 0.5) :weight 'bold)
    (outline-7 :height 1.0 :foreground (doom-lighten magenta 0.5) :weight 'bold)
    (outline-8 :height 1.0 :foreground (doom-lighten blue 0.8) :weight 'bold)
+   ;;;; org <built-in>
+   (org-document-title :height 2.0 :foreground teal :weight 'bold)
+   (org-document-info :foreground teal)
    ;;;; rainbow-delimiters
    (rainbow-delimiters-depth-1-face :foreground blue)
    (rainbow-delimiters-depth-2-face :foreground green)
