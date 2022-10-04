@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: auto tangle
+# key: atang
+# --
+#+PROPERTY: header-args ${1:lang} :tangle ${2:file} :comments org
+#+auto_tangle: t
+$0
