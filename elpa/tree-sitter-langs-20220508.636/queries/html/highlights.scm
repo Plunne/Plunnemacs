@@ -5,7 +5,13 @@
 (attribute_value) @string
 (comment) @comment
 
-"<" @punctuation.bracket
-">" @punctuation.bracket
-"</" @punctuation.bracket
-"/>" @punctuation.bracket
+
+((element (start_tag (tag_name) @_tag) (text) @operator)
+ (#match? @_tag "^(h[0-9]|title)$"))
+
+[
+  "<"
+  ">"
+  "</"
+  "/>"
+] @punctuation.bracket
