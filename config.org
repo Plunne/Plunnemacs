@@ -663,8 +663,8 @@ Launch a beautiful *dashboard* at startup. Also pretty customizable.
                     (lambda (&rest _) (find-file (expand-file-name "config.org" user-emacs-directory))))
                  ))
               ;; Items
-              dashboard-items '((projects . 10)
-                                (recents . 8)
+              dashboard-items '((recents . 8)
+                                (projects . 10)
                                 (agenda . 5))
               dashboard-item-names '(("Agenda for today:" . "Agenda:")
                                     ("Agenda for the coming week:" . "Agenda:"))
@@ -869,8 +869,6 @@ Appearence of org contents.
 (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 #+end_src
 
-#+RESULTS:
-
 *** List hyphen
 
 Replace list hyphen with dot.
@@ -984,9 +982,12 @@ A toggle terminal emulator.
         (vterm-toggle-fullscreen-p nil)
         (vterm-toggle-hide-method 'delete-window)
     :hook
-        (vterm-toggle-show . evil-insert-state) ; Enter into -- INSERT -- mode
+        (vterm-toggle-show . evil-emacs-state) ; Enter into Emacs mode (enable typing with completion)
         (vterm-toggle-show . hide-mode-line-mode) ; Hide Vterm Modeline
         (vterm-toggle-show . disable-line-numbers)) ; Hide Vterm Line Numbers
+
+;; Escape Emacs mode
+(define-key evil-emacs-state-map [escape] 'evil-normal-state)
 
 ;; Vterm toggle settings
 (with-eval-after-load 'vterm
@@ -1174,7 +1175,6 @@ Language Server Protocol.
 *** LSP Keybindings
 
 #+begin_src emacs-lisp
-;; LSP Keybinds
 (nvmap :prefix "g" "r" '(lsp-ui-peek-find-references :which-key "goto references (lsp-ui-peek)"))
 #+end_src
 

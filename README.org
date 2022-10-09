@@ -138,8 +138,8 @@ Vim Keybindings
     :init
         (setq evil-want-integration t
               evil-want-keybinding nil
-              evil-vsplit-window-right t
               evil-split-window-below t
+              evil-vsplit-window-right t
               evil-undo-system 'undo-redo)
         (evil-mode))
 
@@ -202,6 +202,7 @@ There are the keybindings.
 
 (nvmap :keymaps 'override :prefix "SPC"
     "SPC"       '(counsel-M-x :which-key "M-x")
+    "RET"       '(project-compile :which-key "RET")
     "<tab>"     '(org-open-at-point :which-key "M-x")
     "h r r"     '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "Reload emacs config")
     "e"         '(treemacs :which-key "Explorer")
@@ -244,6 +245,10 @@ There are the keybindings.
     "l f"       '(lsp-ivy-global-workspace-symbol :which-key "Find symbol (Ivy)")
     "l r"       '(lsp-rename :which-key "Rename symbol")
     "l s"       '(lsp-treemacs-symbols :which-key "Symbols (Treemacs)")
+    ;; Compile
+    "m k"       '((lambda () (interactive) (shell-command "make && make clean")) :which-key "make")
+    "m q"       '((lambda () (interactive) (shell-command "qmake")) :which-key "qmake")
+    "m m"       '((lambda () (interactive) (shell-command "./compile_run.sh")) :which-key "run")
     ;; Org Mode
     "o ."       '(counsel-org-goto :which-key "Counsel org goto")
     "o a"       '(org-agenda :which-key "Org agenda")
@@ -445,6 +450,7 @@ Disable anoying graphical elements.
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(desktop-save-mode 1)
 #+end_src
 
 ** Line numbers
@@ -496,11 +502,12 @@ Some miscellaneous patches.
 
 #+begin_src emacs-lisp
 (global-auto-revert-mode t) ; Refresh buffer instantly after a save.
-(set-fringe-mode 10)        ; Set a little space for side indicators.
+(set-fringe-mode 10) ; Set a little space for side indicators.
 
-(setq use-short-answers t ; Replace yes/no prompts with y/n
+(setq-default use-short-answers t ; Replace yes/no prompts with y/n
       frame-resize-pixelwise t ; Patching the bottom empty space glitch
       make-backup-files nil ; Disable the anoying backup~
+      truncate-lines t ; Disable lines wrapping
       initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")) ; Dashboard at startup
       scroll-conservatively 10000) ; Smooth scrolling
 #+end_src
@@ -519,7 +526,7 @@ _Notice :_
 To get my theme works, you have to copy them from =./themes= to =./elpa/doom-themes= .
 
 If you prefer the light theme, change =doom-feather-dark= to =doom-feather-light= .
-With *solaire-mode* change the dashboard banner logo to =plunnemacs-light.png= . 
+With *solaire-mode* change the dashboard banner logo to =plunnemacs-dark.png= . 
 
 #+begin_src emacs-lisp
 (use-package doom-themes
@@ -529,7 +536,7 @@ With *solaire-mode* change the dashboard banner logo to =plunnemacs-light.png= .
               doom-themes-enable-italic t
               doom-themes-treemacs-theme "doom-atom")
         (doom-themes-treemacs-config)
-        (load-theme 'doom-feather-dark t))
+        (load-theme 'doom-feather-light t))
 #+end_src
 
 *IMORTANT!*
@@ -565,7 +572,7 @@ If you disable it, I recommend you to use the dashboard banner logo =plunnemacs.
 Also, remove the line =:after solaire-mode= in the *doom-themes* setup.
 
 #+begin_src emacs-lisp
-(use-package solaire-mode :config (solaire-global-mode 1))
+(use-package solaire-mode :config (solaire-global-mode +1))
 #+end_src
 
 * CENTAUR TABS
@@ -599,6 +606,17 @@ Also, remove the line =:after solaire-mode= in the *doom-themes* setup.
               centaur-tabs-new-tab-text "    "
               centaur-tabs-cycle-scope 'tabs)
         (centaur-tabs-mode t))
+
+;; Fix centaur-tabs with emacsclient
+(defun fix-centaur-tabs ()
+    (centaur-tabs-mode -1)
+    (centaur-tabs-mode)
+    (centaur-tabs-headline-match))
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+        (lambda (frame) (with-selected-frame frame (fix-centaur-tabs)))
+        (fix-centaur-tabs)))
 #+end_src
 
 * MODELINE
@@ -629,13 +647,13 @@ Launch a beautiful *dashboard* at startup. Also pretty customizable.
               dashboard-set-file-icons t
               dashboard-center-content nil ; set to 't' for centered content
               ;; Banner
-              dashboard-startup-banner (expand-file-name "themes/logo/plunnemacs-dark.png" user-emacs-directory) ; use custom image as banner
+              dashboard-startup-banner (expand-file-name "themes/logo/plunnemacs-light.png" user-emacs-directory) ; use custom image as banner
               dashboard-banner-logo-title "Org because Unicorn!"
               ;; Navigator
               dashboard-set-navigator t
               dashboard-navigator-buttons ; Format: "(icon title help action face prefix suffix)"
                 `(( ;; Button 1 
-                    (" " "Gitlab" "Gitlab profile"
+                    (" " "Github" "Github profile"
                     (lambda (&rest _) (browse-url-firefox "github.com/Plunne")))
                     ;; Button2
                     (" " "TODOs" "TODO List"
@@ -645,8 +663,8 @@ Launch a beautiful *dashboard* at startup. Also pretty customizable.
                     (lambda (&rest _) (find-file (expand-file-name "config.org" user-emacs-directory))))
                  ))
               ;; Items
-              dashboard-items '((projects . 10)
-                                (recents . 8)
+              dashboard-items '((recents . 8)
+                                (projects . 10)
                                 (agenda . 5))
               dashboard-item-names '(("Agenda for today:" . "Agenda:")
                                     ("Agenda for the coming week:" . "Agenda:"))
@@ -964,9 +982,12 @@ A toggle terminal emulator.
         (vterm-toggle-fullscreen-p nil)
         (vterm-toggle-hide-method 'delete-window)
     :hook
-        (vterm-toggle-show . evil-insert-state) ; Enter into -- INSERT -- mode
+        (vterm-toggle-show . evil-emacs-state) ; Enter into Emacs mode (enable typing with completion)
         (vterm-toggle-show . hide-mode-line-mode) ; Hide Vterm Modeline
         (vterm-toggle-show . disable-line-numbers)) ; Hide Vterm Line Numbers
+
+;; Escape Emacs mode
+(define-key evil-emacs-state-map [escape] 'evil-normal-state)
 
 ;; Vterm toggle settings
 (with-eval-after-load 'vterm
@@ -1154,7 +1175,6 @@ Language Server Protocol.
 *** LSP Keybindings
 
 #+begin_src emacs-lisp
-;; LSP Keybinds
 (nvmap :prefix "g" "r" '(lsp-ui-peek-find-references :which-key "goto references (lsp-ui-peek)"))
 #+end_src
 
