@@ -536,7 +536,7 @@ With *solaire-mode* change the dashboard banner logo to =plunnemacs-dark.png= .
               doom-themes-enable-italic t
               doom-themes-treemacs-theme "doom-atom")
         (doom-themes-treemacs-config)
-        (load-theme 'doom-feather-dark t))
+        (load-theme 'doom-feather-light t))
 #+end_src
 
 *IMORTANT!*
@@ -647,7 +647,7 @@ Launch a beautiful *dashboard* at startup. Also pretty customizable.
               dashboard-set-file-icons t
               dashboard-center-content nil ; set to 't' for centered content
               ;; Banner
-              dashboard-startup-banner (expand-file-name "themes/logo/plunnemacs-dark.png" user-emacs-directory) ; use custom image as banner
+              dashboard-startup-banner (expand-file-name "themes/logo/plunnemacs-light.png" user-emacs-directory) ; use custom image as banner
               dashboard-banner-logo-title "Org because Unicorn!"
               ;; Navigator
               dashboard-set-navigator t
